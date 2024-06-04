@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppendienste by Kevin Augschöll</title>
+</head>
+<style>
+    html {
+        font-family: sans-serif;
+        text-align: center;
+    }
+
+    .title {
+        color: black;
+    }
+
+    .container {
+        border: 1px solid black;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        width: 50%;
+    }
+
+    .one {
+        color: red;
+    }
+
+    .two {
+        color: blue;
+    }
+
+    .between {
+        color: black;
+    }
+</style>
+
+<body>
+    <h1 class="title">Gruppendienste</h1>
+    <div class="container">
+        <h2 class="title">Für diese Woche vom mhhhm bis mhhhh</h2>
+        <h3>- Küchendienst <span id="1" class="one">Niemand</span> <span class="between">und</span> <span id="2"
+                class="two">Niemand</span></h3>
+        <h3>- Kochdienst <span id="3" class="one">Niemand</span> <span class="between">und</span> <span id="4"
+                class="two">Niemand</span></h3>
+        <h3>- Einkaufsdienst <span id="5" class="one">Niemand</span> <span class="between">und</span> <span id="6"
+                class="two">Niemand</span></h3>
+        <h3>- Bad/Toilettendienst <span id="8" class="one">Niemand</span> <span class="between">und</span> <span id="9"
+                class="two">Niemand</span></h3>
+        <h3>- Mülldienst <span id="7" class="one">Niemand</span>
+        </h3>
+        <h3>- Blumen/Wohnzimmerdienst <span id="10" class="one">Niemand</span>
+        </h3>
+        <h3>- Kostgeld <span id="11" class="one">Niemand</span>
+        </h3>
+        <h3>- Wäsche/Hauswirtschaftsdienst <span id="12" class="one">Niemand</span>
+    </div>
+    <button id="reset">Wiederholen</button>
+</body>
+
+<script>
+    function setup() {
+        let names = localStorage.getItem("names") || ["Kevin", "Jakob", "Sonja", "Ludwig", "Joe", "Michael", "Dario"];
+        let reset = names.slice();
+
+        function randomName() {
+            if (names.length === 0) {
+                names = reset;
+            }
+            const index = Math.floor(Math.random() * names.length);
+            const name = names[index];
+            names.splice(index, 1);
+            console.log(name)
+            return name;
+        }
+
+        for (let i = 1; i <= 12; i++) {
+            if (i == 9) {
+                const span = document.getElementById(`${i}`);
+                span.innerHTML = "Sonja";
+                names = names.filter(name => name !== "Sonja");
+                continue;
+            }
+
+            const span = document.getElementById(`${i}`);
+            console.log(span)
+            span.innerHTML = randomName();
+        }
+        const span = document.getElementById(`8`);
+        if (span.innerHTML === "Sonja") {
+            setup();
+        }
+    }
+    document.getElementById("reset").addEventListener("click", () => {
+        setup();
+    });
+
+</script>
+
+</html>
