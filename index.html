@@ -21,6 +21,7 @@
         display: block;
         margin-right: auto;
         margin-left: auto;
+        width: max-content;
     }
 
     .one {
@@ -39,7 +40,7 @@
 <body>
     <h1 class="title">Gruppendienste</h1>
     <div class="container">
-        <h2 class="title">Für diese Woche vom mhhhm bis mhhhh</h2>
+        <h2 class="title">Für diese Woche vom <span id="first">Datum</span> bis <span id="second">Datum</span></h2>
         <h3>- Küchendienst <span id="1" class="one">Niemand</span> <span class="between">und</span> <span id="2"
                 class="two">Niemand</span></h3>
         <h3>- Kochdienst <span id="3" class="one">Niemand</span> <span class="between">und</span> <span id="4"
@@ -60,9 +61,37 @@
 </body>
 
 <script>
+    const today = new Date();
+    const day = today.getDay();
+    if (day === 2) { // Tuesday is day 2 in javascript
+        const nextTuesday = new Date(today.getTime());
+        nextTuesday.setDate(today.getDate() + (7 - ((day + 6) % 7)));
+        document.getElementById("first").innerHTML = today.toLocaleDateString();
+        document.getElementById("second").innerHTML = nextTuesday.toLocaleDateString();
+    } else {
+        const lastTuesday = new Date(today.getTime());
+        lastTuesday.setDate(today.getDate() - ((day + 6) % 7));
+        document.getElementById("first").innerHTML = lastTuesday.toLocaleDateString();
+        document.getElementById("second").innerHTML = today.toLocaleDateString();
+    }
     function setup() {
         let names = localStorage.getItem("names") || ["Kevin", "Jakob", "Sonja", "Ludwig", "Joe", "Michael", "Dario"];
         let reset = names.slice();
+
+        const today = new Date();
+        const day = today.getDay();
+        if (day === 2) { // Tuesday is day 2 in javascript
+            const nextTuesday = new Date(today.getTime());
+            nextTuesday.setDate(today.getDate() + (7 - ((day + 6) % 7)));
+            document.getElementById("first").innerHTML = today.toLocaleDateString();
+            document.getElementById("second").innerHTML = nextTuesday.toLocaleDateString();
+        } else {
+            const lastTuesday = new Date(today.getTime());
+            lastTuesday.setDate(today.getDate() - ((day + 6) % 7));
+            document.getElementById("first").innerHTML = lastTuesday.toLocaleDateString();
+            document.getElementById("second").innerHTML = today.toLocaleDateString();
+        }
+
 
         function randomName() {
             if (names.length === 0) {
@@ -71,7 +100,6 @@
             const index = Math.floor(Math.random() * names.length);
             const name = names[index];
             names.splice(index, 1);
-            console.log(name)
             return name;
         }
 
@@ -84,7 +112,6 @@
             }
 
             const span = document.getElementById(`${i}`);
-            console.log(span)
             span.innerHTML = randomName();
         }
         const span = document.getElementById(`8`);
