@@ -35,6 +35,29 @@
     .between {
         color: black;
     }
+
+    .input {
+        border: 1px solid black;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        width: 500px;
+        height: 300px;
+        font-size: 20px;
+        overflow-y: scroll;
+    }
+
+    .input:focus {
+        outline: none;
+    }
+
+    .input:focus-visible {
+        outline: 2px solid black;
+    }
+
+    .input:focus-within {
+        outline: 2px solid black;
+    }
 </style>
 
 <body>
@@ -61,6 +84,8 @@
         <h3>- Wäsche/Hauswirtschaftsdienst <span id="12" class="one">Niemand</span>
     </div>
     <button id="reset">Wiederholen</button>
+    <input type="text" id="input" class="input">
+    <button id="save">Speichern</button>
 </body>
 
 <script>
@@ -78,7 +103,10 @@
         document.getElementById("second").innerHTML = today.toLocaleDateString();
     }
     function setup() {
-        let names = localStorage.getItem("names") || ["Kevin", "Jakob", "Sonja", "Ludwig", "Joe", "Michael", "Dario"];
+        let names = JSON.parse(localStorage.getItem("names")) || ["Kevin", "Jakob", "Sonja", "Ludwig", "Joe", "Michael", "Dario"];
+        let string = ""
+        names.map(name => string += name.toString() + ", ");
+        document.getElementById("input").value = string;
         let reset = names.slice();
 
         const today = new Date();
@@ -124,6 +152,11 @@
     }
     document.getElementById("reset").addEventListener("click", () => {
         setup();
+    });
+
+    document.getElementById("save").addEventListener("click", () => {
+        let names = document.getElementById("input").value.split(", ");
+        localStorage.setItem("names", JSON.stringify(names));
     });
 
 </script>
