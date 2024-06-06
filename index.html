@@ -42,9 +42,11 @@
         margin-right: auto;
         margin-left: auto;
         width: 100%;
+
         @media (min-width: 600px) {
             width: 50%;
         }
+
         font-size: 20px;
         overflow-y: scroll;
     }
@@ -59,6 +61,22 @@
 
     .input:focus-within {
         outline: 2px solid black;
+    }
+
+    .love {
+        animation: loveemo 2s infinite;
+
+    }
+    @keyframes loveemo {
+        0%{
+            scale: 1;
+        }
+        50%{
+            scale: 1.5;
+        }
+        100%{
+            scale: 1;
+        }
     }
 </style>
 
@@ -88,6 +106,11 @@
     <button id="reset">Wiederholen</button>
     <input type="text" id="input" class="input">
     <button id="save">Speichern</button>
+    <h1 class="love">We Love Emo Girls</h1>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/XPlBPrcFnps?si=TiuyRT0ufmXbX-bX"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </body>
 
 <script>
