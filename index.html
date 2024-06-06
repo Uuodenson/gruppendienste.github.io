@@ -41,8 +41,10 @@
         display: block;
         margin-right: auto;
         margin-left: auto;
-        width: 500px;
-        height: 300px;
+        width: 100%;
+        @media (min-width: 600px) {
+            width: 50%;
+        }
         font-size: 20px;
         overflow-y: scroll;
     }
@@ -89,19 +91,32 @@
 </body>
 
 <script>
+
     const today = new Date();
     const day = today.getDay();
-    if (day === 2) { // Tuesday is day 2 in javascript
-        const nextTuesday = new Date(today.getTime());
-        nextTuesday.setDate(today.getDate() + (7 - ((day + 6) % 7)));
-        document.getElementById("first").innerHTML = today.toLocaleDateString();
-        document.getElementById("second").innerHTML = nextTuesday.toLocaleDateString();
-    } else {
-        const lastTuesday = new Date(today.getTime());
-        lastTuesday.setDate(today.getDate() - ((day + 6) % 7));
-        document.getElementById("first").innerHTML = lastTuesday.toLocaleDateString();
-        document.getElementById("second").innerHTML = today.toLocaleDateString();
+
+    const nextTuesday = new Date(today.getTime());
+    nextTuesday.setDate(today.getDate() + (7 - ((day + 6) % 7)));
+    document.getElementById("first").innerHTML = today.toLocaleDateString();
+    document.getElementById("second").innerHTML = nextTuesday.toLocaleDateString();
+
+    function setFavicons(favImg) {
+        let headTitle = document.querySelector('head');
+        let setFavicon = document.createElement('link');
+        setFavicon.setAttribute('rel', 'shortcut icon');
+        setFavicon.setAttribute('href', favImg);
+        headTitle.appendChild(setFavicon);
     }
+
+
+    fetch("https://raw.githubusercontent.com/Uuodenson/gruppendienste.github.io/main/data.json")
+        .then(res => res.json())
+        .then(data => {
+            document.body.style.backgroundImage = `url(${data.image})`;
+            setFavicons(data.icon);
+        })
+        .catch(err => console.log(err));
+
     function setup() {
         let names = JSON.parse(localStorage.getItem("names")) || ["Kevin", "Jakob", "Sonja", "Ludwig", "Joe", "Michael", "Dario"];
         let string = ""
