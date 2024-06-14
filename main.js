@@ -1,7 +1,7 @@
 
 const h4selectors = document.getElementsByTagName("h4");
 const spanselectors = document.getElementsByTagName("span");
-let copy = ["Kevin", "Jakob", "Joe", "Michael", "Sonja", "Dario", "Ludwig"]
+let copy = JSON.parse(localStorage.getItem("names")) || ["Kevin", "Jakob", "Joe", "Michael", "Sonja", "Dario", "Ludwig"]
 const aufgaben = ["Küchendienst", "Kochdienst", "Einkaufsdienst", "Bad/Toilettendienst", "Mülldienst", "Blumen/Wohnzimmerdienst", "Kostgeld", "Wäsche/Haushaltsdienst"]
 let names = [...copy]
 
@@ -17,7 +17,11 @@ function savenames() {
         names_array.push(inputs[i].value)
     }
     copy = names_array
-    console.log(copy)
+    localStorage.setItem("names", JSON.stringify(copy))
+    document.querySelectorAll(".delete").forEach((e) => e.remove())
+    document.querySelectorAll(".grid_button").forEach((e) => e.remove())
+    const grid_div = document.querySelector(".flex_box")
+    copy.forEach((e) => grid_div.innerHTML += button(e))
 }
 
 function addinputname() {
@@ -86,10 +90,10 @@ function setspannames() {
 function setnames() {
     for (let i = 0; i < spanselectors.length; i++) {
         let name = setspannames();
-        if (i === 7 && name === "Sonja") {
+        if (i === 6 && name === "Sonja") {
             setnames()
         } else {
-            spanselectors[i].innerHTML = i === 8 ? "Sonja" : name
+            spanselectors[i].innerHTML = i === 7 ? "Sonja" : name
         }
     }
 }
